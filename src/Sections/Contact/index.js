@@ -3,6 +3,15 @@ import LinkedId from "../../assets/linkedin-brands.svg";
 import Twitter from "../../assets/twitter-square-brands.svg";
 import Instagram from "../../assets/instagram-square-brands.svg";
 import styled from "styled-components";
+import { useEffect, useState } from "react";
+//firebase
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import app from "../../Firebase";
+
+import { toast, toastOptions, ToastContainer } from "react-toastify"
+
+import { Button, Box, Spacer } from "@chakra-ui/react"
+
 
 const ContactSection = styled.section`
   width: 100vw;
@@ -124,7 +133,90 @@ const Row = styled.div`
     }
   }
 `;
+
+const provider = new GoogleAuthProvider();
+
+
+const signInWithGoogle = () => {
+  signInWithPopup(auth, provider);
+}
+
+const auth = getAuth(app);
+
+
+
+
+
+
+
+
 const Contact = () => {
+
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+
+  });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+
+  const createUser = () => {
+    console.log("clicked")
+    if (!handleValidations()) {
+      return;
+    }
+    createUserWithEmailAndPassword(auth, formData.email, formData.password).then((value) => {
+      console.log(value)
+    })
+
+  }
+  const [user, setUser] = useState(null)
+  console.log(user)
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) { setUser(user); }
+
+      else {
+        console.log("you are logged out")
+        setUser(null);
+      }
+    })
+  })
+
+  const findUser = () => {
+
+    if (!handleValidations()) {
+      return;
+    }
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
+        // Signed in 
+        console.log(userCredential)
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+
+  }
+
+  const toastOptions = { position: "bottom-right", autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "dark" }
+  const handleValidations = () => {
+    const { password, confirmPassword } = formData;
+    if (password.length < 8) {
+      toast.error("Password should be greater than 8 characters", toastOptions);
+      return false;
+    }
+
+    return true;
+  }
+
   return (
     <ContactSection id="contact">
       <Title>Get in touch</Title>
@@ -146,30 +238,45 @@ const Contact = () => {
       </Icons>
       <Form>
         <Row>
-          <input name="name" type="text" placeholder="your name" />
+          <input name="name" type="text" onChange={handleChange} value={formData.name} placeholder="your name" />
           <input
             name="email"
             type="email"
+            onChange={handleChange}
+            value={formData.email}
             placeholder="enter working email id"
           />
+          <input
+            name="password"
+            type="password"
+            value={formData.password}
+            onChange={handleChange}
+
+            placeholder="enter any password"
+          />
+
         </Row>
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          rows="2"
-          placeholder="your message"
-        ></textarea>
+
         <div style={{ margin: "0 auto" }}>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-            }} style={ {border:"3px solid white"}}
+          <Button
+            onClick={createUser}
+
           >
-            Submit
-          </button>
+            SignUp
+          </Button>
+          <Button
+            onClick={findUser}
+          >
+            SignIn
+          </Button>
+          <Button
+            onClick={signInWithGoogle}
+          >
+            SignIn via google
+          </Button>
         </div>
       </Form>
+      <ToastContainer />
     </ContactSection>
   );
 };

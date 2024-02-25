@@ -5,10 +5,15 @@ import App from "./App";
 //import reportWebVitals from "./reportWebVitals";''
 
 import { createRoot } from 'react-dom/client';
+import { ChakraProvider } from "@chakra-ui/react";
 
 const domNode = document.getElementById('root');
 const root = createRoot(domNode);
-root.render(<App />);
+root.render(
+    <ChakraProvider>
+        <App />
+    </ChakraProvider>
+);
 
 // ReactDOM.render(
 //   <React.StrictMode>
