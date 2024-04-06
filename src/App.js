@@ -19,10 +19,11 @@ function App() {
         <GlobalStyle />
         {/* Hi There! */}
         <ScrollToTop />
-        <Header />
-        <Db />
+
+
 
         <BrowserRouter>
+          <Header />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<Signup />} />
@@ -30,7 +31,7 @@ function App() {
             <Route path="/product/camera" element={<Camera_Option />} />
             <Route path="/product/file" element={<File_option />} />
             <Route path="/product/search" element={<Search />} />
-            <Route path="/description" element={<Description />} />
+            <Route path='/description' element={<Description />} />
           </Routes>
         </BrowserRouter>
 

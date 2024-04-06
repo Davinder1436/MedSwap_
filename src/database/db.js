@@ -5,19 +5,15 @@ const db = getDatabase(app);
 
 
 
-export default function Db() {
 
-    const starCountRef = ref(db, '/medicines');
-    onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data)
-        // updateStarCount(postElement, data);
-    });
+const starCountRef = ref(db, '/medicines');
+onValue(starCountRef, (snapshot) => {
+    const data = snapshot.val();
+    data;
 
-    console.log(starCountRef)
-    return (
-        <div>
+});
 
-        </div>
-    )
-}
+export default dataBase;
+
+
+

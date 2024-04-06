@@ -318,7 +318,7 @@ const Services = () => {
     }
   };
 
-  
+
   return (
     <ServiceSection id="services">
       <Background ref={ref}>

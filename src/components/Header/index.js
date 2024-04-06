@@ -3,7 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
-
+import { Link } from "react-router-dom";
 const Headers = styled.header`
   display: flex;
   justify-content: space-between;
@@ -193,7 +193,7 @@ const Header = () => {
         padding: "1rem 2.5rem",
 
         borderRadius: "0 0 50px 50px",
-        
+
         border: "2px solid var(--white)",
 
         duration: 1,
@@ -203,7 +203,7 @@ const Header = () => {
           trigger: element,
           start: "bottom+=200 top",
           end: "+=100",
-          
+
           scrub: true,
         },
       });
@@ -221,9 +221,9 @@ const Header = () => {
 
         duration: 1,
         ease: "power1.out",
-        backgroundColor:'transparent',
-        backdropFilter:'blur(12px)',
-        
+        backgroundColor: 'transparent',
+        backdropFilter: 'blur(12px)',
+
 
         scrollTrigger: {
           trigger: element,
@@ -238,7 +238,7 @@ const Header = () => {
   return (
     <Headers ref={ref}>
       <Logo>
-        <img src={logo} alt="CodeBucks" />
+        <img src={logo} alt="medswap" />
         <h3>MedSwap</h3>
       </Logo>
       <Nav>
@@ -251,11 +251,14 @@ const Header = () => {
         <a href="#services" onClick={(e) => scrollUp("services", e)}>
           Services
         </a>
+        <Link to="/product">
+          Products
+        </Link>
         <a href="#contact" onClick={(e) => scrollUp("contact", e)}>
           <Button>Log in/Sign up</Button>
         </a>
       </Nav>
-      <HamburgerBtn clicked={+click} onClick={() => setClick(!click)}>
+      <HamburgerBtn color="black" clicked={+click} onClick={() => setClick(!click)}>
         <span></span>
       </HamburgerBtn>
       <MobileMenu clicked={+click}>
@@ -271,6 +274,7 @@ const Header = () => {
         <a href="#contact" onClick={(e) => handleClick("contact", e)}>
           <Button>Contact Us</Button>
         </a>
+
       </MobileMenu>
     </Headers>
   );
