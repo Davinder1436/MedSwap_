@@ -9,6 +9,7 @@ const Headers = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 1rem 5rem;
+  gap: 1rem;
   background-color: var(--nav);
   color: var(--white);
   position: relative;
@@ -36,6 +37,7 @@ const Nav = styled.nav`
   width: 25rem;
   max-width: 40rem;
   display: flex;
+  gap: 2rem;
   align-items: center;
   justify-content: space-between;
   transition: all 0.3s;
@@ -254,9 +256,6 @@ const Header = () => {
         <Link to="/product">
           Products
         </Link>
-        <a href="#contact" onClick={(e) => scrollUp("contact", e)}>
-          <Button>Log in/Sign up</Button>
-        </a>
       </Nav>
       <HamburgerBtn color="black" clicked={+click} onClick={() => setClick(!click)}>
         <span></span>
